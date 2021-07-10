@@ -1,16 +1,35 @@
-import React, { useState } from 'react';
-export default function App() {
-    const [conteo, setConteo] = useState(0);
-    return (
-        <div>
-            Esta es una aplicación de ejemplo React con estado, renderizada en el lado del
-            servidor
-            <br />
-            <br />
-            El siguiente botón mostrará cuántas veces se le ha dado clic:
-            <br />
-            <br />
-            <button onClick={() => setConteo(conteo + 1)}>{conteo}</button>
-        </div>
-    );
+import React from "react";
+import CardList from './CardList';
+import Form from './Form';
+
+
+
+class App extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            profiles: [],
+        };
+    }
+
+    addNewProfile = (profileData) => {
+        console.log(profileData);
+        this.setState(prevState => ({
+            profiles: [...prevState.profiles, profileData]
+        }));
+    };
+
+
+    render() {
+        return (
+            <div>
+                <div className="header">
+                    {this.props.title}
+                </div>
+                <Form onSubmit={this.addNewProfile}/>
+                <CardList profiles = {this.state.profiles} />
+            </div>
+        );
+    }
 }
+export default App;
